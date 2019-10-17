@@ -1,5 +1,7 @@
 # raw_to_wav.py
 
+When using or modifying these scripts you should mention LifeWatch Belgium, Flanders Marine Institute in your publications.
+
 Written in Python 3.7
 
 Converts all .raw-files in the input folder (and subfolders!) to .wav-files with given parameters. Skips raw-files that already have a wav-file present in the output folder.

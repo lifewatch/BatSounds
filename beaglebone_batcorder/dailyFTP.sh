@@ -20,14 +20,14 @@ echo >> $logfile                          # append empty line in log
 echo "----------------------------------------"  >> $logfile
 date >> $logfile                          # append date and time
 
-echo "mounting" &>> $logfile
+echo "mounting" >> $logfile
 mount -L GSM_BC $bc_sd &>> $logfile       # mount the batcorder
 mount /dev/mmcblk0p1 $bbb_sd              # mount the beaglebone SD card
 
-echo "syncing" &>> $logfile
+echo "syncing" >> $logfile
 rsync -av $bc_sd $bbb_sd &>> $logfile     # rsync the beaglebone SD card to the batcorder
 
-echo "transferring" &>> $logfile          #transfer files and logs using FTP
+echo "transferring" >> $logfile          #transfer files and logs using FTP
 if [ "$flag" = 1 ]; then                  # clear beaglebone SD card
 /usr/bin/lftp -e "set net:timeout 30; mirror --Remove-source-dirs -R ${bbb_sd} ${target_dir_files}; bye" -u $un,$pwd $ftp_server &>> $logfile
 else
@@ -35,7 +35,7 @@ else
 fi
 /usr/bin/lftp -e "set net:timeout 30; mirror -R ${logs} ${target_dir_logs}; bye" -u $un,$pwd $ftp_server
 
-echo "unmounting" &>> $logfile
+echo "unmounting" >> $logfile
 umount /media/sd/                         # unmount SD card
 umount /media/usb-drive/                  # unmount batcorder
 

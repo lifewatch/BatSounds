@@ -1,42 +1,45 @@
 #!/bin/bash
-while getopts 'd' opt; do
+while getopts 'd' opt; do                 # check if remove flag -d is there
 case "$opt" in
 d) flag=1 ;;
 *) flag=0 ;;
 esac
 done
 
-logs="/home/debian/logs"
-logfile="${logs}/BBB2.log"
-bbb_sd="/media/sd/"
-bc_sd="/media/usb-drive/"
-un="yourusernamehere"
-pwd="yourpasswordnamehere"
-ftp_server="yourftphere"
-target_dir_files="yourlocationhere"
-target_dir_logs="yourlocationhere"
+logs="/home/debian/logs"                  # location of the logfile
+logfile="${logs}/BBB2.log"                # name of the logfile
+bbb_sd="/media/sd/"                       # mountpoint for the beaglebone SD card
+bc_sd="/media/usb-drive/"                 # mountpoint for the batcorder
+un="yourusernamehere"                     # your ftp login username
+pwd="yourpasswordnamehere"                # your ftp login password
+ftp_server="yourftphere"                  # your ftp server name
+target_dir_files="yourlocationhere"       # location of the recordings on the ftp server
+target_dir_logs="yourlocationhere"        # location of the logs on the ftp server
 
-echo >> $logfile # append empty line in log
+echo >> $logfile                          # append empty line in log
 echo "----------------------------------------"  >> $logfile
-date >> $logfile # append date and time
+date >> $logfile                          # append date and time
 
-mount -L GSM_BC $bc_sd &>> $logfile # mount the batcorder
-mount /dev/mmcblk0p1 $bbb_sd # mount the BBB's SD card
+echo "mounting" &>> $logfile
+mount -L GSM_BC $bc_sd &>> $logfile       # mount the batcorder
+mount /dev/mmcblk0p1 $bbb_sd              # mount the beaglebone SD card
 
-rsync -av $bc_sd $bbb_sd &>> $logfile
+echo "syncing" &>> $logfile
+rsync -av $bc_sd $bbb_sd &>> $logfile     # rsync the beaglebone SD card to the batcorder
 
-#transfer files using FTP
-if [ "$flag" = 1 ]; then
+echo "transferring" &>> $logfile          #transfer files and logs using FTP
+if [ "$flag" = 1 ]; then                  # clear beaglebone SD card
 /usr/bin/lftp -e "set net:timeout 30; mirror --Remove-source-dirs -R ${bbb_sd} ${target_dir_files}; bye" -u $un,$pwd $ftp_server &>> $logfile
 else
 /usr/bin/lftp -e "set net:timeout 30; mirror -R ${bbb_sd} ${target_dir_files}; bye" -u $un,$pwd $ftp_server &>> $logfile
 fi
 /usr/bin/lftp -e "set net:timeout 30; mirror -R ${logs} ${target_dir_logs}; bye" -u $un,$pwd $ftp_server
 
-umount /media/sd/
-umount /media/usb-drive/
+echo "unmounting" &>> $logfile
+umount /media/sd/                         # unmount SD card
+umount /media/usb-drive/                  # unmount batcorder
 
 if [ "$flag" = 1 ]; then
 echo "relabeling" >> $logfile
-mlabel -i /dev/sda1 -s :: DELETEME
+mlabel -i /dev/sda1 -s :: DELETEME        # relabel batcorder SD card to DELETEME for automatic clearing by the batcorder
 fi

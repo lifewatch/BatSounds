@@ -7,18 +7,20 @@ esac
 done
 
 logs="/home/debian/logs"
-logfile="${logs}/BBB.log"
+logfile="${logs}/BBB2.log"
 bbb_sd="/media/sd/"
 bc_sd="/media/usb-drive/"
 un="yourusernamehere"
-pwd="yourpasswordhere"
-ftp_server="ftp.yourwebsite.be"
+pwd="yourpasswordnamehere"
+ftp_server="yourftphere"
+target_dir_files="yourlocationhere"
+target_dir_logs="yourlocationhere"
 
 echo >> $logfile # append empty line in log
 echo "----------------------------------------"  >> $logfile
 date >> $logfile # append date and time
 
-mount /dev/sda1 $bc_sd &>> $logfile # mount the batcorder
+mount -L GSM_BC $bc_sd &>> $logfile # mount the batcorder
 mount /dev/mmcblk0p1 $bbb_sd # mount the BBB's SD card
 
 rsync -av $bc_sd $bbb_sd &>> $logfile

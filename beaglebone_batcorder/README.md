@@ -1,3 +1,5 @@
+# DailyFTP.sh
+
 This script is written for a beaglebone black, connected through USB to the batcorder. It backs up all files on the batcorder to its own SD card, after which it will upload the files to an FTP server. Every step of the process is logged in BBB.log, a file that is also uploaded to the FTP server.
 
 Using this script for your research or publication requires mentioning of Lifewatch Belgium, Flanders Marine Institute.

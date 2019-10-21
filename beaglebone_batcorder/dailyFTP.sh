@@ -7,7 +7,7 @@ esac
 done
 
 logs="/home/debian/logs"                  # location of the logfile
-logfile="${logs}/BBB.log"                # name of the logfile
+logfile="${logs}/BBB.log"                 # name of the logfile
 bbb_sd="/media/sd/"                       # mountpoint for the beaglebone SD card
 bc_sd="/media/usb-drive/"                 # mountpoint for the batcorder
 un="yourusernamehere"                     # your ftp login username

@@ -1,6 +1,8 @@
+This script is written for a beaglebone black, connected through USB to the batcorder. It backs up all files on the batcorder to its own SD card, after which it will upload the files to an FTP server. Every step of the process is logged in BBB.log, a file that is also uploaded to the FTP server.
+
 ## Hardware
-This script is written for a beaglebone black, connected through USB to the batcorder. The USB connection should be powered externally, since the beaglebone cannot supply enough power on its own. You can do this by connecting an externally powered USB hub to the beaglebone, and connecting the batcorder the the USB hub.
-- (GSM) batcorder
+The USB connection should be powered externally, since the beaglebone cannot supply enough power on its own. You can do this by connecting an externally powered USB hub to the beaglebone, and connecting the batcorder the the USB hub.
+- (GSM) batcorder and power supply
 - Beaglebone black (possibly works with Raspberry Pi - not tested)
 - Externally powered USB hub
 - Wired internet connection
@@ -18,7 +20,7 @@ It works as follows:
 - Beaglebone SD card is transferred to our FTP server using lftp
 - Beaglebone SD card and batcorder Sd card are unmounted
 - If '-d' option is used (option 2), it will delete all data from the Beaglebone SD card, and relabel the batcorder SD-card to 'DELETEME', which will cause the batcorder to erase its SD card on the next boot. Any other way of erasing data off the batcorder SD card will cause the batcorder to raise an error and block further operation. When '-d' option was called, the data should be offloaded immediately! Failing to do so will result in the 'LOGFILE.TXT' file to be overwritten.
-- If '-d' option is not used, it will simply backup the batcorder SD card to the beaglebone SD card and the FTP server.
+- If '-d' option is not used, it will simply back up the batcorder SD card to the beaglebone SD card and the FTP server.
 
 ## How to get it working
 The script depends on the following packages:

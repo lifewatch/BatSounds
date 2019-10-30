@@ -45,7 +45,7 @@ def mkdir2(directory):
     return
 
 
-def convertAll(inp_dir, outp_dir):
+def convert_all(inp_dir, outp_dir):
     raws = filelist(inp_dir, outp_dir)
     n_files = len(raws)
     if n_files != 0:
@@ -68,7 +68,7 @@ if not os.path.isdir(input_folder):
 output_folder = os.path.abspath(input('output folder name: '))
 
 start = time.time()
-n_files = convertAll(input_folder, output_folder)
+n_files = convert_all(input_folder, output_folder)
 end = time.time()
 
 if n_files == 0:

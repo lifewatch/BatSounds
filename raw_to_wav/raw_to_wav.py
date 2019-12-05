@@ -45,7 +45,7 @@ def mkdir2(directory):
     return
 
 
-def convert_all(inp_dir, outp_dir):
+def convertAll(inp_dir, outp_dir):
     raws = filelist(inp_dir, outp_dir)
     n_files = len(raws)
     if n_files != 0:
@@ -55,24 +55,28 @@ def convert_all(inp_dir, outp_dir):
         print('\nFinished, ' + str(n_files) + ' files converted')
     return n_files
 
-    
-print('Programmed by Roeland Develter,')
-print('Flanders Marine Institute 2019')
+def main():
 
-input_folder = os.path.abspath(input('raw files directory name: '))
+	print('Programmed by Roeland Develter,')
+	print('Flanders Marine Institute 2019')
 
-if not os.path.isdir(input_folder):
-    print('The input directory "{}" does not exist'.format(input_folder))
-    raise SystemExit
-    
-output_folder = os.path.abspath(input('output folder name: '))
+	input_folder = os.path.abspath(input('raw files directory name: '))
 
-start = time.time()
-n_files = convert_all(input_folder, output_folder)
-end = time.time()
+	if not os.path.isdir(input_folder):
+		print('The input directory "{}" does not exist'.format(input_folder))
+		raise SystemExit
+		
+	output_folder = os.path.abspath(input('output folder name: '))
 
-if n_files == 0:
-    print('No unconverted raw files detected.')
-else:
-    print('Time elapsed: ' + str(round(end-start, 2)) + \
-      's\tper file: ' +  str(round((end-start)/n_files,4)) + 's')
+	start = time.time()
+	n_files = convertAll(input_folder, output_folder)
+	end = time.time()
+
+	if n_files == 0:
+		print('No unconverted raw files detected.')
+	else:
+		print('Time elapsed: ' + str(round(end-start, 2)) + \
+		  's\tper file: ' +  str(round((end-start)/n_files,4)) + 's')
+		  
+if __name__ == "__main__":
+	main()

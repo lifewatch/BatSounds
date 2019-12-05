@@ -69,7 +69,7 @@ def main():
 	output_folder = os.path.abspath(input('output folder name: '))
 
 	start = time.time()
-	n_files = convertAll(input_folder, output_folder)
+	n_files = convert_all(input_folder, output_folder)
 	end = time.time()
 
 	if n_files == 0:

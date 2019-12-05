@@ -45,7 +45,7 @@ def mkdir2(directory):
     return
 
 
-def convertAll(inp_dir, outp_dir):
+def convert_all(inp_dir, outp_dir):
     raws = filelist(inp_dir, outp_dir)
     n_files = len(raws)
     if n_files != 0:

@@ -41,5 +41,5 @@ umount /media/usb-drive/                  # unmount batcorder
 
 if [ "$flag" = 1 ]; then
 echo "relabeling" >> $logfile
-mlabel -i /dev/sda1 -s :: DELETEME        # relabel batcorder SD card to DELETEME for automatic clearing by the batcorder
+mlabel -i /dev/sda -s ::DELETEME          # relabel batcorder SD card to DELETEME for automatic clearing by the batcorder
 fi

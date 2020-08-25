@@ -60,3 +60,4 @@ alias {
   option subnet-mask 255.255.255.0;
 }
 ```
+Finally, disable connman to prevent a DHCP request on boot

@@ -30,7 +30,7 @@ It works as follows:
 The script depends on the following packages:
 - rsync
 - lftp
-- mlabel
+- mlabel (part of mtools package)
 
 We used crontab for scheduling a daily run of the script (without '-d'). When the batcorder SD card was almost full, the script was run with '-d' option.
 

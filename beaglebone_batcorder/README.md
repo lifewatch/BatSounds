@@ -34,7 +34,21 @@ The script depends on the following packages:
 
 We used crontab for scheduling a daily run of the script (without '-d'). When the batcorder SD card was almost full, the script was run with '-d' option.
 
-For our setup, using a static IP address was required. This can be configured in the /etc/network/interfaces file, the following lines should be present:
+For our setup, using a static IP address was required.
+Two approaches can be used:
+Set up connman by creating a file and not touching the interfaces or dhclient file:
+```
+/var/lib/connman/eth0.config
+
+[service_eth0]
+Type=ethernet
+IPv4=static.ip.addres.here/24/gateway.ip.address.here
+#IPv4=dhcp
+Nameservers=1.1.1.1
+
+```
+
+Alternately, this can be configured in the /etc/network/interfaces file, the following lines should be present:
 ```bash
 auto lo
 iface lo inet loopback
@@ -60,4 +74,5 @@ alias {
   option subnet-mask 255.255.255.0;
 }
 ```
-Finally, disable connman to prevent a DHCP request on boot
+
+Disable connman, otherwise a DHCP request will be sent out on boot.

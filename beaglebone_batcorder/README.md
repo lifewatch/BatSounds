@@ -36,43 +36,42 @@ We used crontab for scheduling a daily run of the script (without '-d'). When th
 
 For our setup, using a static IP address was required.
 Two approaches can be used:
-* Set up connman by creating a file and not touching the interfaces or dhclient file (both need to be cleared):
-```
-/var/lib/connman/eth0.config
+* Option 1: Set up connman by creating a file (`/var/lib/connman/eth0.config`)
+and not touching the interfaces or dhclient file (both need to be cleared):
+    ```code:bash
+    [service_eth0]
+    Type=ethernet
+    IPv4=static.ip.addres.here/24/gateway.ip.address.here
+    #IPv4=dhcp
+    Nameservers=1.1.1.1
+    ```
+* Option 2: Alternately, this can be configured in the /etc/network/interfaces file. Three steps:
+    - in /etc/network/interfaces the following lines should be present:
+      ```code:bash
+      auto lo
+      iface lo inet loopback
 
-[service_eth0]
-Type=ethernet
-IPv4=static.ip.addres.here/24/gateway.ip.address.here
-#IPv4=dhcp
-Nameservers=1.1.1.1
+      auto eth0
+      iface eth0 inet static
+          address your.ip.address.here
+          netmask 255.255.255.0
+          gateway 192.168.1.1
 
-```
-
-* Alternately, this can be configured in the /etc/network/interfaces file, the following lines should be present:
-```bash
-auto lo
-iface lo inet loopback
-
-auto eth0
-iface eth0 inet static
-    address your.ip.address.here
-    netmask 255.255.255.0
-    gateway 192.168.1.1
-
-iface usb0 inet static
-    address 192.168.7.2
-    netmask 255.255.255.252
-    network 192.168.7.0
-    gateway 192.168.7.1
-```
-
-In addition, DHCP should be suppressed in the /etc/dhcp/dhclient.conf file. Add/uncomment/edit the following:
-```bash
-alias {
-  interface "eth0";
-  fixed-address your.ip.adress.here;
-  option subnet-mask 255.255.255.0;
-}
-```
-
-Disable connman, otherwise a DHCP request will be sent out on boot.
+      iface usb0 inet static
+          address 192.168.7.2
+          netmask 255.255.255.252
+          network 192.168.7.0
+          gateway 192.168.7.1
+      ```
+    - In addition, DHCP should be suppressed in the /etc/dhcp/dhclient.conf file. Add/uncomment/edit the following:
+      ```code:bash
+      alias {
+      interface "eth0";
+      fixed-address your.ip.adress.here;
+      option subnet-mask 255.255.255.0;
+      }
+      ```
+    - Disable connman, otherwise a DHCP request will be sent out on boot. In the terminal:
+      ```code:bash
+      systemctl disable connman.service 
+      ```

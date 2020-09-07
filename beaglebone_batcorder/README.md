@@ -36,7 +36,7 @@ We used crontab for scheduling a daily run of the script (without '-d'). When th
 
 For our setup, using a static IP address was required.
 Two approaches can be used:
-Set up connman by creating a file and not touching the interfaces or dhclient file:
+* Set up connman by creating a file and not touching the interfaces or dhclient file (both need to be cleared):
 ```
 /var/lib/connman/eth0.config
 
@@ -48,7 +48,7 @@ Nameservers=1.1.1.1
 
 ```
 
-Alternately, this can be configured in the /etc/network/interfaces file, the following lines should be present:
+* Alternately, this can be configured in the /etc/network/interfaces file, the following lines should be present:
 ```bash
 auto lo
 iface lo inet loopback
